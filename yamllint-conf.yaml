@@ -1,0 +1,40 @@
+# SPDX-FileCopyrightText: (C) 2025 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+# yamllint config
+
+extends: default
+
+rules:
+  empty-lines:
+    max-end: 1
+  line-length:
+    max: 160
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+  brackets:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+  document-start: disable
+
+ignore:
+  - ci/
+  - trivy/
+  - .github/
+  - .git/
+  - .golangci.yml
+  # ignore files with Helm template syntax (yamllint can't parse them)
+  - deployments/sre-exporter/files/configs/otel.yaml
+  - deployments/sre-exporter/templates/config-reloader-service.yaml
+  - deployments/sre-exporter/templates/deployment.yaml
+  - deployments/sre-exporter/templates/external-secret-destination-ca.yaml
+  - deployments/sre-exporter/templates/external-secret-destination-url.yaml
+  - deployments/sre-exporter/templates/external-secret-password.yaml
+  - deployments/sre-exporter/templates/external-secret-username.yaml
+  - deployments/sre-exporter/templates/network_policy.yaml
+  - deployments/sre-exporter/templates/otel-secret.yaml
+  - deployments/sre-exporter/templates/secret-store-destination-ca.yaml
+  - deployments/sre-exporter/templates/secret-store-destination-url.yaml
+  - deployments/sre-exporter/templates/secret-store-password.yaml
+  - deployments/sre-exporter/templates/secret-store-username.yaml

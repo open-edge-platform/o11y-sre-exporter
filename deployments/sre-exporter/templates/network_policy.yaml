@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: (C) 2025 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: sre-exporter-config-reloader-allowed-traffic
+  labels:
+    {{- include "sre-exporter.labels" . | nindent 4 }}
+spec:
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ required "A valid observability tenant controller namespace is required!" .Values.configReloader.o11yTenantController.namespace }}
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ .Values.configReloader.o11yTenantController.name }}
+      ports:
+        - port: {{ include "sre-exporter.ports.grpc" . }}
+          protocol: TCP
+  podSelector:
+    matchLabels:
+      {{- include "sre-exporter.selectorLabels" . | nindent 6 }}
+  policyTypes:
+    - Ingress

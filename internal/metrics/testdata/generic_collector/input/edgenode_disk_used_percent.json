@@ -1,0 +1,79 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "__name__": "disk_used_percent",
+          "device": "/etc/lp/node/.keys/.apt",
+          "fstype": "fuse",
+          "host": "9035e67dbe",
+          "mode": "rw",
+          "path": "/etc/lp/node/.apt/.keys"
+        },
+        "value": [
+          1706370116,
+          "76.43210249001977"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "disk_used_percent",
+          "device": "/etc/lp/node/certs/.apt",
+          "fstype": "fuse",
+          "host": "9035e67dbe",
+          "mode": "rw",
+          "path": "/etc/lp/node/.apt/certs"
+        },
+        "value": [
+          1706370116,
+          "76.43210249001977"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "disk_used_percent",
+          "device": "dm-0",
+          "fstype": "ext4",
+          "host": "9035e67dbe",
+          "label": "intel-manageability-secret",
+          "mode": "rw",
+          "path": "/etc/intel-manageability/secret"
+        },
+        "value": [
+          1706370116,
+          "1.7022961203483769"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "disk_used_percent",
+          "device": "sda1",
+          "fstype": "ext4",
+          "host": "9035e67dbe",
+          "mode": "rw",
+          "path": "/boot"
+        },
+        "value": [
+          1706370116,
+          "45.82087633008648"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "disk_used_percent",
+          "device": "sda3",
+          "fstype": "ext4",
+          "host": "9035e67dbe",
+          "mode": "rw",
+          "path": "/"
+        },
+        "value": [
+          1706370116,
+          "76.43210249001977"
+        ]
+      }
+    ]
+  }
+}

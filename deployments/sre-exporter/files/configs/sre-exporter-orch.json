@@ -1,0 +1,157 @@
+{
+  "namespace": "orch",
+  "source": {
+    "queryURI": "{{ required `A valid query URI is required!` .Values.metricsExporter.queryURI }}",
+    "mimirOrg": "{{ required `A valid Org Id is required!` .Values.metricsExporter.mimirScopeOrgId }}"
+  },
+  "collectors": [
+    {
+      "name": "IstioCollector",
+      "enabled": true,
+      "metrics": [
+        {
+          "name": "istioQuery",
+          "query": "istio_requests_total{destination_workload=~'app-deployment-api|app-resource-manager|catalog-service|cluster-template-manager|ecm|harbor-chartmuseum|harbor-core|harbor-jobservice|harbor-portal|harbor-registry|harbor-trivy|api|inventory|platform-keycloak|rancher|vault'}",
+          "id": "istio_requests",
+          "help": "The total count of HTTP/GRPC requests processed by Istio Proxies",
+          "labels": [
+            "connection_security_policy",
+            "destination_app",
+            "destination_canonical_revision",
+            "destination_canonical_service",
+            "destination_cluster",
+            "destination_principal",
+            "destination_service",
+            "destination_service_name",
+            "destination_service_namespace",
+            "destination_version",
+            "destination_workload",
+            "destination_workload_namespace",
+            "instance",
+            "job",
+            "pod",
+            "pod_name",
+            "reporter",
+            "request_protocol",
+            "response_code",
+            "response_flags",
+            "source_app",
+            "source_canonical_revision",
+            "source_canonical_service",
+            "source_cluster",
+            "source_principal",
+            "source_version",
+            "source_workload",
+            "source_workload_namespace",
+            "grpc_response_status"
+          ],
+          "Type": "Counter"
+        }
+      ]
+    },
+    {
+      "name": "NodeCollector",
+      "enabled": true,
+      "metrics": [
+        {
+          "name": "nodeCpuTotalQuery",
+          "query": "sum by(k8s_node_name) (k8s_node_allocatable_cpu)",
+          "id": "cpu_total_cores",
+          "help": "Total CPU cores per node",
+          "labels": [
+            "k8s_node_name"
+          ],
+          "Type": "Gauge"
+        },
+        {
+          "name": "nodeCpuUsedQuery",
+          "query": "sum by(k8s_node_name) (k8s_node_cpu_utilization)",
+          "id": "cpu_used_cores",
+          "help": "Used CPU cores per node",
+          "labels": [
+            "k8s_node_name"
+          ],
+          "Type": "Gauge"
+        },
+        {
+          "name": "nodeMemTotalQuery",
+          "query": "k8s_node_allocatable_memory",
+          "id": "memory_total_bytes",
+          "help": "Total memory per node in Bytes",
+          "labels": [
+            "k8s_node_name"
+          ],
+          "Type": "Gauge"
+        },
+        {
+          "name": "nodeMemAvailQuery",
+          "query": "k8s_node_memory_available",
+          "id": "memory_available_bytes",
+          "help": "Current available memory per node in Bytes",
+          "labels": [
+            "k8s_node_name"
+          ],
+          "Type": "Gauge"
+        }
+      ]
+    },
+    {
+      "name": "api",
+      "enabled": true,
+      "metrics": [
+        {
+          "name": "traefikRequestsTotalQuery",
+          "query": "traefik_service_requests_total",
+          "id": "requests_all",
+          "help": "The total count of HTTP request processed",
+          "labels": [
+            "code",
+            "exported_service",
+            "method",
+            "protocol",
+            "instance",
+            "namespace",
+            "pod"
+          ],
+          "destLabels": [
+            "status",
+            "target_service",
+            "method",
+            "protocol",
+            "gw_instance",
+            "gw_namespace",
+            "gw_pod"
+          ],
+          "Type": "Counter"
+        },
+        {
+          "name": "traefikDurationQuery",
+          "query": "traefik_service_request_duration_seconds_bucket",
+          "id": "request_latency_seconds_all",
+          "help": "Histogram of HTTP request latencies",
+          "labels": [
+            "code",
+            "exported_service",
+            "method",
+            "protocol",
+            "instance",
+            "namespace",
+            "pod",
+            "le"
+          ],
+          "destLabels": [
+            "status",
+            "target_service",
+            "method",
+            "protocol",
+            "gw_instance",
+            "gw_namespace",
+            "gw_pod",
+            "le"
+          ],
+          "type": "Counter"
+        }
+      ]
+    }
+  ]
+}

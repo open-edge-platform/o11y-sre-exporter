@@ -1,0 +1,144 @@
+# SPDX-FileCopyrightText: (C) 2025 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+
+replicaCount: 1
+
+# ---------------------------------------------------------------------------------------------
+metricsExporter:
+  image:
+    repository: o11y/sre-metrics-exporter
+  configmap:
+    mountPath: "/etc/config"
+  # queryURI... and mimirScopeOrgId... must be set to valid values
+  queryURI:
+  mimirScopeOrgId:
+  queryURIEdgeNode:
+  mimirScopeOrgIdEdgeNode:
+  customerLabelValue: default
+  vaultInstances:
+    - -vaultURI=vault-0
+    - -vaultURI=vault-1
+    - -vaultURI=vault-2
+  # vault namespace must be set to a valid value
+  vaultNamespace:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 2500m
+      memory: 2500Mi
+
+# ---------------------------------------------------------------------------------------------
+otelCollector:
+  pushInterval: "60s"
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 2500Mi
+  batch:
+    size: 8192
+    max_size: 0
+    timeout: "15s"
+  # limits in MiB
+  limits:
+    memory: 2000
+    spike: 400
+  # Note: basic auth and tls configuration here should contain information about the service where metrics will be pushed
+  basicAuth:
+    enabled: false
+    usernameSecretName: basic-auth-username
+    usernameSecretKey: username
+    passwordSecretName: basic-auth-password
+    passwordSecretKey: password
+  tls:
+    enabled: false
+    # if true then well-known (public) server CA certificates are supported
+    useSystemCaCertsPool: true
+    # accepts any certificate presented by the server.
+    # susceptible to machine-in-the-middle attacks.
+    # this option should be used only for testing
+    insecureSkipVerify: false
+    caSecret:
+      # if enabled it will load the private server CA certificate from a secret
+      # it is possible to use it together with useSystemCaCertsPool option set to true
+      enabled: false
+      name: destination-secret-ca
+      key: ca.crt
+    mtls:
+      enabled: false
+      secretName: mtls-secret
+      certSecretKey: tls.crt
+      keySecretKey: tls.key
+  destination:
+    secretName: destination-secret-url
+    urlSecretKey: url
+  # enable if secret(s) are retrieved from external Secret Manager
+  externalSecret:
+    enabled: false
+    refreshInterval: "5m"
+    secretPath: $
+    secretKey:
+      destinationUrl: dest_url
+      destinationCaCert: ca_crt
+      username: username
+      password: password
+    # all provider... values below must be set if externalSecret is enabled
+    providerSecretName:
+    providerWebhookUrl:
+    providerWebhookQueryKey:
+  proxy:
+    enabled: false
+    no_proxy:
+    http_proxy:
+    https_proxy:
+
+# ---------------------------------------------------------------------------------------------
+configReloader:
+  image:
+    repository: o11y/sre-config-reloader
+    # Use appVersion if not specified
+    # tag: 0.1.0
+  o11yTenantController:
+    # o11yTenantController namespace must be set to a valid value
+    namespace:
+    name: observability-tenant-controller
+  resources:
+    requests:
+      cpu: 1m
+      memory: 16Mi
+    limits:
+      cpu: 500m
+      memory: 128Mi
+
+# ---------------------------------------------------------------------------------------------
+containerSecurityContext:
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+  allowPrivilegeEscalation: false
+
+podAnnotations:
+  sidecar.istio.io/proxyCPU: 15m
+  sidecar.istio.io/proxyCPULimit: 1000m
+  sidecar.istio.io/proxyMemory: 64Mi
+  sidecar.istio.io/proxyMemoryLimit: 1Gi
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  seccompProfile:
+    type: RuntimeDefault
+
+imagePullPolicy: IfNotPresent
+# imageRegistry must be set to the correct registry
+imageRegistry:
+imagePullSecrets: { }
+
+# Note: this should only be configured in testing environments
+devMode: false

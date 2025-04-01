@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: 2025 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+version = 1
+
+[[annotations]]
+path = [
+  "**.json",
+  ".tool-versions",
+  "VERSION",
+  "deployments/sre-exporter/templates/_helpers.tpl",
+  "docs/exported-metrics-spec.md",
+  "internal/metrics/testdata/**/output/**",
+  "go.mod",
+  "go.sum",
+  "magefiles/testdata/fakeExpectedOutput.txt",
+  ".cache/**",
+  "ci/**"
+]
+SPDX-FileCopyrightText = "2025 Intel Corporation"
+SPDX-License-Identifier = "Apache-2.0"

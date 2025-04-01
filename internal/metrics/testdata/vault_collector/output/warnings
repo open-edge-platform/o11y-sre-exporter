@@ -1,0 +1,12 @@
+# HELP orch_vault_status_query_latency_milliseconds How long did it take to perform the slowest query
+# TYPE orch_vault_status_query_latency_milliseconds gauge
+orch_vault_status_query_latency_milliseconds{customer="cs",service="orch"} 0
+# HELP orch_vault_status_query_samples How many samples did the last queries generate
+# TYPE orch_vault_status_query_samples gauge
+orch_vault_status_query_samples{customer="cs",service="orch"} 0
+# HELP orch_vault_status_up Were all the last backend queries successful
+# TYPE orch_vault_status_up gauge
+orch_vault_status_up{customer="cs",service="orch"} 0
+# HELP orch_vault_status_warnings How many warnings did the last queries generate
+# TYPE orch_vault_status_warnings gauge
+orch_vault_status_warnings{customer="cs",service="orch"} 1

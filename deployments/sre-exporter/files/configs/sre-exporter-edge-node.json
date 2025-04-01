@@ -1,0 +1,85 @@
+{
+  "namespace": "orch_edgenode",
+  "source": {
+    "queryURI": "{{ required `A valid query URI is required!` .Values.metricsExporter.queryURIEdgeNode }}",
+    "mimirOrg": "{{ required `A valid Org Id is required!` .Values.metricsExporter.mimirScopeOrgIdEdgeNode }}"
+  },
+  "collectors": [
+    {
+      "name": "env",
+      "enabled": true,
+      "metrics": [
+        {
+          "name": "Temperature Celsius",
+          "query": "temp_temp",
+          "id": "temp",
+          "help": "Temperature of a sensor on Edge Node host [Celsius]",
+          "labels": [
+            "host",
+            "hostGuid",
+            "projectId",
+            "sensor"
+          ],
+          "Type": "Gauge"
+        }
+      ]
+    },
+    {
+      "name": "mem",
+      "enabled": true,
+      "metrics": [
+        {
+          "name": "Memory Used Percent",
+          "query": "mem_used_percent",
+          "id": "used_percent",
+          "help": "Percentage of used memory vs total memory on Edge Node host",
+          "labels": [
+            "host",
+            "hostGuid",
+            "projectId"
+          ],
+          "Type": "Gauge"
+        }
+      ]
+    },
+    {
+      "name": "disk",
+      "enabled": true,
+      "metrics": [
+        {
+          "name": "Disk Used Percent",
+          "query": "disk_used_percent",
+          "id": "used_percent",
+          "help": "Percentage of used vs total available space on a disk of Edge Node host",
+          "labels": [
+            "host",
+            "hostGuid",
+            "projectId",
+            "device",
+            "path",
+            "mode"
+          ],
+          "Type": "Gauge"
+        }
+      ]
+    },
+    {
+      "name": "cpu",
+      "enabled": true,
+      "metrics": [
+        {
+          "name": "Total CPU Idle Percent",
+          "query": "cpu_usage_idle{cpu='cpu-total'}",
+          "id": "idle_percent",
+          "help": "Percentage of idle vs total CPU cycles on Edge Node host",
+          "labels": [
+            "host",
+            "hostGuid",
+            "projectId"
+          ],
+          "Type": "Gauge"
+        }
+      ]
+    }
+  ]
+}

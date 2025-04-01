@@ -1,0 +1,59 @@
+{
+  "namespace": "orch",
+  "source": {
+    "queryURI": "{{ .Values.metricsExporter.queryURI }}",
+    "mimirOrg": "{{ .Values.metricsExporter.mimirScopeOrgId }}"
+  },
+  "collectors": [
+    {
+      "name": "dummy",
+      "enabled": true,
+      "metrics": [
+        {
+          "name": "firstMetric",
+          "query": "first_metric",
+          "id": "request_first",
+          "help": "The first metric in observability",
+          "labels": [
+            "method",
+            "protocol",
+            "pod"
+          ],
+          "destLabels": [
+            "status",
+            "target_service"
+          ],
+          "Type": "Counter"
+        },
+        {
+          "name": "secondMetric",
+          "query": "second_metric",
+          "id": "request_second",
+          "help": "The second metric in observability",
+          "labels": [
+            "host"
+          ],
+          "destLabels": [
+            "target_service"
+          ],
+          "Type": "Counter"
+        },
+        {
+          "name": "thirdMetric",
+          "query": "third_metric",
+          "id": "request_third",
+          "help": "The third metric in observability",
+          "labels": [
+            "instance",
+            "namespace"
+          ],
+          "destLabels": [
+            "gw_instance",
+            "gw_namespace"
+          ],
+          "Type": "Counter"
+        }
+      ]
+    }
+  ]
+}

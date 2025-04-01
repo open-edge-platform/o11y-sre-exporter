@@ -1,0 +1,20 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "__name__": "cpu_usage_idle",
+          "cpu": "cpu-total",
+          "host": "c7867b871b",
+          "hostGuid": "4c4c4544-0044-5810-804a-b1c04f384633"
+        },
+        "value": [
+          1706273808,
+          "96.59105141233312"
+        ]
+      }
+    ]
+  }
+}

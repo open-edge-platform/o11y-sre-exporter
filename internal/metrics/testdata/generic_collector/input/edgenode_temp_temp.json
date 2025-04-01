@@ -1,0 +1,44 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "__name__": "temp_temp",
+          "host": "3d88ef10d9",
+          "hostGuid": "4c4c4544-0044-5810-804a-c2c04f384633",
+          "sensor": "coretemp_core_0"
+        },
+        "value": [
+          1706184278,
+          "41"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "temp_temp",
+          "host": "3d88ef10d9",
+          "hostGuid": "4c4c4544-0044-5810-804a-c2c04f384633",
+          "sensor": "coretemp_core_1"
+        },
+        "value": [
+          1706184278,
+          "38"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "temp_temp",
+          "host": "3d88ef10d9",
+          "hostGuid": "4c4c4544-0044-5810-804a-c2c04f384633",
+          "sensor": "coretemp_core_10"
+        },
+        "value": [
+          1706184278,
+          "40"
+        ]
+      }
+    ]
+  }
+}

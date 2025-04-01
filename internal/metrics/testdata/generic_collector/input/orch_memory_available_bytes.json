@@ -1,0 +1,48 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "__name__": "k8s_node_memory_available",
+          "k8s_node_name": "ip-10-250-2-47.us-west-2.compute.internal"
+        },
+        "value": [
+          1709022680,
+          "22458671104"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "k8s_node_memory_available",
+          "k8s_node_name": "ip-10-250-26-105.us-west-2.compute.internal"
+        },
+        "value": [
+          1709022680,
+          "20767780864"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "k8s_node_memory_available",
+          "k8s_node_name": "ip-10-250-33-127.us-west-2.compute.internal"
+        },
+        "value": [
+          1709022680,
+          "22062993408"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "k8s_node_memory_available",
+          "k8s_node_name": "ip-10-250-33-54.us-west-2.compute.internal"
+        },
+        "value": [
+          1709022680,
+          "24251858944"
+        ]
+      }
+    ]
+  }
+}

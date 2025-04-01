@@ -1,0 +1,218 @@
+# SPDX-FileCopyrightText: (C) 2025 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sre-exporter.fullname" . }}
+  labels:
+    {{- include "sre-exporter.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "sre-exporter.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "sre-exporter.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      serviceAccountName: sre-exporter
+      containers:
+        - name: metrics-exporter
+          image: "{{ required `A valid image registry is required!` .Values.imageRegistry }}/{{ .Values.metricsExporter.image.repository }}:{{ .Values.metricsExporter.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          resources:
+            {{- toYaml .Values.metricsExporter.resources | nindent 12 }}
+          args:
+            - "-config={{ .Values.metricsExporter.configmap.mountPath }}/sre-exporter-orch.json"
+            - "-config={{ .Values.metricsExporter.configmap.mountPath }}/sre-exporter-edge-node.json"
+            - "-listenAddress=:9141"
+            - "-customerLabel={{ .Values.metricsExporter.customerLabelValue }}"
+            - "-vaultNamespace={{ required "A valid vault namespace is required!" .Values.metricsExporter.vaultNamespace }}"
+            {{- range .Values.metricsExporter.vaultInstances }}
+            - {{ . | quote }}
+            {{- end }}
+          {{- if .Values.devMode }}
+          ports:
+            - name: testing-port
+              containerPort: 9141
+              protocol: TCP
+          {{- end }}
+          volumeMounts:
+            - name: sre-config
+              mountPath: {{ .Values.metricsExporter.configmap.mountPath }}
+              readOnly: true
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9141
+              scheme: HTTP
+              httpHeaders:
+                - name: Authorization
+                  value: "Basic c3JlOjEyMw=="
+            initialDelaySeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 9141
+              scheme: HTTP
+              httpHeaders:
+                - name: Authorization
+                  value: "Basic c3JlOjEyMw=="
+            initialDelaySeconds: 5
+        - name: otel-collector
+          image: otel/opentelemetry-collector-contrib:0.111.0
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          resources:
+            {{- toYaml .Values.otelCollector.resources | nindent 12 }}
+          args:
+            - "--config"
+            - "/etc/otel/otel-secret.yaml"
+          env:
+            - name: DESTINATION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.otelCollector.destination.secretName }}
+                  key: {{ .Values.otelCollector.destination.urlSecretKey }}
+            - name: DESTINATION_AUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.otelCollector.basicAuth.usernameSecretName }}
+                  key: {{ .Values.otelCollector.basicAuth.usernameSecretKey }}
+            - name: DESTINATION_AUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.otelCollector.basicAuth.passwordSecretName }}
+                  key: {{ .Values.otelCollector.basicAuth.passwordSecretKey }}
+            - name: GOMEMLIMIT
+              value: {{ .Values.otelCollector.limits.memory }}MiB
+            {{- if .Values.otelCollector.proxy.enabled }}
+            - name: no_proxy
+              value: {{ .Values.otelCollector.proxy.no_proxy }}
+            - name: http_proxy
+              value: {{ .Values.otelCollector.proxy.http_proxy }}
+            - name: https_proxy
+              value: {{ .Values.otelCollector.proxy.https_proxy }}
+            {{- end }}
+          {{- if .Values.devMode }}
+          ports:
+            - name: testing-port
+              containerPort: 8888
+              protocol: TCP
+          {{- end }}
+          volumeMounts:
+            - name: otel-secret
+              mountPath: /etc/otel
+              readOnly: true
+            {{- if .Values.otelCollector.tls.enabled }}
+            {{- if .Values.otelCollector.tls.caSecret.enabled }}
+            - name: destination-ca
+              mountPath: /etc/tls-ca
+              readOnly: true
+            {{- end }}
+            {{- if .Values.otelCollector.tls.mtls.enabled }}
+            - name: mtls
+              mountPath: /etc/tls-mtls
+              readOnly: true
+            {{- end }}
+            {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 13133
+              scheme: HTTP
+            initialDelaySeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 8888
+              scheme: HTTP
+            initialDelaySeconds: 3
+        - name: config-reloader
+          image: "{{ required `A valid image registry is required!` .Values.imageRegistry }}/{{ .Values.configReloader.image.repository }}:{{ .Values.configReloader.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          securityContext:
+            {{- toYaml .Values.containerSecurityContext | nindent 12 }}
+          resources:
+            {{- toYaml .Values.configReloader.resources | nindent 12 }}
+          args:
+            - "-namespace={{ .Release.Namespace }}"
+          ports:
+            - containerPort: {{ include "sre-exporter.ports.grpc" . }}
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          readinessProbe:
+            grpc:
+              port: {{ include "sre-exporter.ports.grpc" . }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            grpc:
+              port: {{ include "sre-exporter.ports.grpc" . }}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+      volumes:
+        - name: sre-config
+          configMap:
+            name: "sre-exporter-config"
+            items:
+              - key: sre-exporter-orch.json
+                path: sre-exporter-orch.json
+              - key: sre-exporter-edge-node.json
+                path: sre-exporter-edge-node.json
+        - name: otel-secret
+          secret:
+            secretName: sre-otel-secret
+            items:
+              - key: otel-secret.yaml
+                path: otel-secret.yaml
+        {{- if .Values.otelCollector.tls.enabled }}
+        {{- if .Values.otelCollector.tls.caSecret.enabled }}
+        - name: destination-ca
+          secret:
+            secretName: {{ .Values.otelCollector.tls.caSecret.name }}
+            items:
+              - key: {{ .Values.otelCollector.tls.caSecret.key }}
+                path: ca.crt
+        {{- end }}
+        {{- if .Values.otelCollector.tls.mtls.enabled }}
+        - name: mtls
+          secret:
+            secretName: {{ .Values.otelCollector.tls.mtls.secretName }}
+            items:
+              - key: {{ .Values.otelCollector.tls.mtls.certSecretKey }}
+                path: tls.crt
+              - key: {{ .Values.otelCollector.tls.mtls.keySecretKey }}
+                path: tls.key
+        {{- end }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

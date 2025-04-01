@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: (C) 2025 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: v2
+name: sre-exporter
+description: A Helm chart for Edge Orchestrator SRE Exporter
+type: application
+version: 0.8.24
+appVersion: 0.8.24
+annotations:
+  revision: 9666ce8908c58f7b036961b0bd71583e841c9fde
+  created: "2025-04-01T06:48:29Z"

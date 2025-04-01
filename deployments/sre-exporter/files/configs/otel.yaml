@@ -1,0 +1,90 @@
+# SPDX-FileCopyrightText: (C) 2025 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+extensions:
+  health_check:
+    endpoint: "0.0.0.0:13133"
+  {{- if .Values.otelCollector.basicAuth.enabled }}
+  basicauth/client:
+    client_auth:
+      username: ${env:DESTINATION_AUTH_USERNAME}
+      password: ${env:DESTINATION_AUTH_PASSWORD}
+  {{- end }}
+receivers:
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: sre-exporter-orch
+          scrape_interval: {{ .Values.otelCollector.pushInterval }}
+          static_configs:
+            - targets: [ "127.0.0.1:9141" ]
+          metrics_path: /orch/metrics
+        - job_name: sre-exporter-edgenode
+          scrape_interval: {{ .Values.otelCollector.pushInterval }}
+          static_configs:
+            - targets: [ "127.0.0.1:9141" ]
+          metrics_path: /orch_edgenode/metrics
+        - job_name: sre-exporter-vault
+          scrape_interval: {{ .Values.otelCollector.pushInterval }}
+          static_configs:
+            - targets: [ "127.0.0.1:9141" ]
+          metrics_path: /vault/metrics
+exporters:
+  prometheusremotewrite:
+    endpoint: ${env:DESTINATION_URL}
+    send_metadata: true
+    resource_to_telemetry_conversion:
+      enabled: true
+    add_metric_suffixes: false
+    target_info:
+      enabled: false
+    {{- if .Values.otelCollector.basicAuth.enabled }}
+    auth:
+      authenticator: basicauth/client
+    {{- end }}
+    tls:
+      {{- if not .Values.otelCollector.tls.enabled }}
+      insecure: true
+      {{- else }}
+      {{- if and (not .Values.otelCollector.tls.insecureSkipVerify) (not .Values.otelCollector.tls.caSecret.enabled) (not .Values.otelCollector.tls.useSystemCaCertsPool) }}
+      {{- fail "If TLS is enabled then at least one of 'caSecret.enabled', 'useSystemCaCertsPool', 'insecureSkipVerify' options must be set true in '.Values.otelCollector.tls' config!" }}
+      {{- end }}
+      include_system_ca_certs_pool: {{ .Values.otelCollector.tls.useSystemCaCertsPool }}
+      insecure_skip_verify: {{ .Values.otelCollector.tls.insecureSkipVerify }}
+      {{- if .Values.otelCollector.tls.caSecret.enabled }}
+      ca_file: /etc/tls-ca/ca.crt
+      {{- end }}
+      {{- if .Values.otelCollector.tls.mtls.enabled }}
+      cert_file: /etc/tls-mtls/tls.crt
+      key_file: /etc/tls-mtls/tls.key
+      {{- end }}
+      {{- end }}
+processors:
+  batch:
+    send_batch_size: {{ .Values.otelCollector.batch.size | default 8192 }}
+    send_batch_max_size: {{ .Values.otelCollector.batch.max_size | default 0 }}
+    timeout: {{ .Values.otelCollector.batch.timeout | default "15s" }}
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: {{ .Values.otelCollector.limits.memory }}
+    spike_limit_mib: {{ .Values.otelCollector.limits.spike | default ( div .Values.otelCollector.limits.memory 5 ) | default 400 }}
+service:
+  telemetry:
+    metrics:
+      level: "basic"
+      readers:
+        - pull:
+            exporter:
+              prometheus:
+                host: "0.0.0.0"
+                port: 8888
+  extensions:
+    - health_check
+  {{- if .Values.otelCollector.basicAuth.enabled }}
+    - basicauth/client
+  {{- end }}
+  pipelines:
+    metrics:
+      receivers: [ prometheus ]
+      processors: [ memory_limiter,batch ]
+      exporters: [ prometheusremotewrite ]

@@ -1,0 +1,48 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "__name__": "traefik_service_requests_total",
+          "code": "200",
+          "container": "traefik",
+          "endpoint": "metrics",
+          "exported_service": "gateway-system-svc-rancher-https-d34275a75ca5fe6c6ced@kubernetescrd",
+          "instance": "10.244.0.151:9100",
+          "job": "traefik-metrics",
+          "method": "GET",
+          "namespace": "gateway-system",
+          "pod": "traefik-77d4dd6bd-4qrpv",
+          "protocol": "http",
+          "service": "traefik-metrics"
+        },
+        "value": [
+          1705598460.912,
+          "214"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "traefik_service_requests_total",
+          "code": "200",
+          "container": "traefik",
+          "endpoint": "metrics",
+          "exported_service": "gateway-system-svc-rancher-https-d34275a75ca5fe6c6ced@kubernetescrd",
+          "instance": "10.244.0.151:9100",
+          "job": "traefik-metrics",
+          "method": "PATCH",
+          "namespace": "gateway-system",
+          "pod": "traefik-77d4dd6bd-4qrpv",
+          "protocol": "http",
+          "service": "traefik-metrics"
+        },
+        "value": [
+          1705598460.912,
+          "107"
+        ]
+      }
+    ]
+  }
+}

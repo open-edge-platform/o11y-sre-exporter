@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: (C) 2025 Intel Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "sre-exporter-config"
+  namespace: {{ .Release.Namespace }}
+data:
+  sre-exporter-orch.json: |-
+    {{- tpl (.Files.Get "files/configs/sre-exporter-orch.json") . | nindent 4 }}
+  sre-exporter-edge-node.json: |-
+    {{- tpl (.Files.Get "files/configs/sre-exporter-edge-node.json") . | nindent 4 }}

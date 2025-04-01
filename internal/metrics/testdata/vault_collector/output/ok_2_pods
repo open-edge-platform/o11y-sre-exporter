@@ -1,0 +1,13 @@
+# HELP orch_vault_status_up Were all the last backend queries successful
+# TYPE orch_vault_status_up gauge
+orch_vault_status_up{customer="cs",service="orch"} 1
+# HELP orch_vault_status_warnings How many warnings did the last queries generate
+# TYPE orch_vault_status_warnings gauge
+orch_vault_status_warnings{customer="cs",service="orch"} 0
+# HELP orch_vault_status_query_samples How many samples did the last queries generate
+# TYPE orch_vault_status_query_samples gauge
+orch_vault_status_query_samples{customer="cs",service="orch"} 2
+# HELP orch_vault_monitor_vault_status The current status of vault instance ready:0 , sealed:1 , standby:2
+# TYPE orch_vault_monitor_vault_status gauge
+orch_vault_monitor_vault_status{customer="cs",k8s_pod_name="vault-1",service="orch"} 1
+orch_vault_monitor_vault_status{customer="cs",k8s_pod_name="vault-2",service="orch"} 1

@@ -1,0 +1,8 @@
+orch_NodeCollector_up{customer="test-customer",service="orch"} 0
+orch_NodeCollector_warnings{customer="test-customer",service="orch"} 0
+orch_IstioCollector_up{customer="test-customer",service="orch"} 0
+orch_api_up{customer="test-customer",service="orch"} 0
+orch_edgenode_cpu_up{customer="test-customer",service="orch_edgenode"} 0
+orch_edgenode_disk_up{customer="test-customer",service="orch_edgenode"} 0
+orch_edgenode_env_up{customer="test-customer",service="orch_edgenode"} 0
+orch_edgenode_mem_up{customer="test-customer",service="orch_edgenode"} 0

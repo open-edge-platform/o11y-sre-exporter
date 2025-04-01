@@ -1,0 +1,10 @@
+{
+  "initialized": true,
+  "sealed": false,
+  "standby": true,
+  "performance_standby": false,
+  "replication_performance_mode": "unknown",
+  "replication_dr_mode": "unknown",
+  "server_time_utc": 1707216749,
+  "version": "1.14.1"
+}

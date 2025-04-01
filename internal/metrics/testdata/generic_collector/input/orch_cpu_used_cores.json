@@ -1,0 +1,44 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "k8s_node_name": "ip-10-250-2-47.us-west-2.compute.internal"
+        },
+        "value": [
+          1709022514,
+          "0.913908699"
+        ]
+      },
+      {
+        "metric": {
+          "k8s_node_name": "ip-10-250-26-105.us-west-2.compute.internal"
+        },
+        "value": [
+          1709022514,
+          "2.039163491"
+        ]
+      },
+      {
+        "metric": {
+          "k8s_node_name": "ip-10-250-33-127.us-west-2.compute.internal"
+        },
+        "value": [
+          1709022514,
+          "0.714634123"
+        ]
+      },
+      {
+        "metric": {
+          "k8s_node_name": "ip-10-250-33-54.us-west-2.compute.internal"
+        },
+        "value": [
+          1709022514,
+          "1.24398481"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "vector",
+    "result": [
+      {
+        "metric": {
+          "__name__": "k8s_node_allocatable_memory",
+          "k8s_node_name": "ip-10-250-2-47.us-west-2.compute.internal",
+          "k8s_node_uid": "6e8738fa-b79d-4f3b-a411-db4d11570a16"
+        },
+        "value": [
+          1709022642,
+          "32237924352"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "k8s_node_allocatable_memory",
+          "k8s_node_name": "ip-10-250-26-105.us-west-2.compute.internal",
+          "k8s_node_uid": "33400729-ca1f-4a91-83c4-d4756d165caf"
+        },
+        "value": [
+          1709022642,
+          "32237924352"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "k8s_node_allocatable_memory",
+          "k8s_node_name": "ip-10-250-33-127.us-west-2.compute.internal",
+          "k8s_node_uid": "ceecbd94-2ffa-4842-add6-a4000b30f3e3"
+        },
+        "value": [
+          1709022642,
+          "32237924352"
+        ]
+      },
+      {
+        "metric": {
+          "__name__": "k8s_node_allocatable_memory",
+          "k8s_node_name": "ip-10-250-33-54.us-west-2.compute.internal",
+          "k8s_node_uid": "6a0e91ad-aa76-4008-b48c-c9df45b15473"
+        },
+        "value": [
+          1709022642,
+          "32237924352"
+        ]
+      }
+    ]
+  }
+}

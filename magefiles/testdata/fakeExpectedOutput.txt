@@ -1,0 +1,10 @@
+
+## 1. Fake Exported Metrics
+
+<!-- Begin of auto-generated Markdown table -->
+Name | Type | Description | Constant labels | Variable labels | Query
+:---: | :---: | :---: | :---: | :---: | :---:
+orch_dummy_request_first | Counter | The first metric in observability | service, customer | method, protocol, pod | first_metric
+orch_dummy_request_second | Counter | The second metric in observability | service, customer | target_service | second_metric
+orch_dummy_request_third | Counter | The third metric in observability | service, customer | gw_instance, gw_namespace | third_metric
+<!-- End of auto-generated Markdown table -->
