@@ -5,8 +5,8 @@ apiVersion: v2
 name: sre-exporter
 description: A Helm chart for Edge Orchestrator SRE Exporter
 type: application
-version: 0.9.0
-appVersion: 0.9.0
+version: 0.9.1-dev
+appVersion: 0.9.1-dev
 annotations:
-  revision: d7c41246f50b0d01d97b60de1962bfb19490b35c
-  created: "2025-04-02T05:44:12Z"
+  revision: 1cff6d6b6ef88eed57021fc2903ebf124c722149
+  created: "2025-04-02T09:36:19Z"
