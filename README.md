@@ -8,7 +8,7 @@ SPDX-License-Identifier: Apache-2.0
 [Documentation]: https://github.com/open-edge-platform/orch-docs
 [Prometheus Remote-Write Protocol]: https://prometheus.io/docs/specs/remote_write_spec/
 [Exported metrics specification]: docs/exported-metrics-spec.md
-[Contributor's Guide]: CONTRIBUTING.md
+[Contributor's Guide]: https://docs.openedgeplatform.intel.com/edge-manage-docs/main/developer_guide/contributor_guide/index.html
 [Edge Orchestrator Community]: https://github.com/open-edge-platform
 [Troubleshooting]: https://github.com/open-edge-platform/orch-docs
 [Contact us]: https://github.com/open-edge-platform
@@ -125,6 +125,11 @@ To generate code from protobuf definitions, use:
 make proto
 ```
 
+## Develop
+
+It is recommended to develop the `sre-exporter` application by deploying and testing it as a part of the Edge Orchestrator cluster.
+Refer to [Development and Testing](docs/develop.md) document for more detailed instructions.
+
 ## Contribute
 
 To learn how to contribute to the project, see the [Contributor's Guide].
@@ -140,9 +145,6 @@ To bump the version, increment the version in the `VERSION` file and run the fol
 ```sh
 make helm-build
 ```
-
-It is recommended to develop the `sre-exporter` application by deploying and testing it as a part of the Edge Orchestrator cluster.
-Refer to [Development and Testing](docs/develop.md) document for more detailed instructions.
 
 ## Community and Support
 
