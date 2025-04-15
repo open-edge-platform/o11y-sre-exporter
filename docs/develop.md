@@ -80,19 +80,18 @@ This document shows how to deploy and test Edge Orchestrator with a custom versi
 1. Deploy the local version of Edge Orchestrator
 
    - Commit changes to the development branch of Edge Manageability Framework
-   - Push the branch to the remote repository
    - Deploy the local changes using the `mage deploy:orchLocal` target (e.g. `mage deploy:orchLocal dev`). Refer to the documentation in the
    [Edge Manageability Framework] repository for more details.
 
    After several minutes, `sre-exporter` should get installed in the custom version tracking your remote branch of the `sre-exporter` repository.
-   Each time you make changes to that branch and push them, Argo will notice the new commit and sync the changes made.
+   Each time you make changes to that branch, Argo CD will notice the new commit and sync the changes made.
 
 ### Modifying the `sre-exporter` chart values
 
 To update values with which `sre-exporter` will be deployed, the easiest way is to change the values in `argocd/applications/{configs|custom}/sre-exporter.{yaml|tpl}` paths of the [Edge Manageability Framework] repository.
 You can overwrite every field there by simply specifying the value. Remember that custom values overwrite base values.
 
-After changing the values, you need to push the changes to the remote branch and make ArgoCD sync to the new commit by running the `mage deploy:orchLocal` target.
+After changing the values, you need to commit the changes to the local branch and make Argo CD sync to the new commit by running the `mage deploy:orchLocal dev` target.
 
 For example, to install `sre-exporter` with `devMode` enabled, you'd modify the `argocd/applications/configs/sre-exporter.yaml` by simply adding `devMode: true` at the end.
 
@@ -128,7 +127,7 @@ Follow the steps below to do that:
 
 1. Run `make kind-all` to build and load the image.
 
-1. Commit and push the changes to remote branch. Argo will now try to sync and will use the newly created image.
+1. Commit and push the changes to remote branch. Argo CD will now try to sync and will use the newly created image.
 
 ## Testing of the `sre-exporter` application
 
