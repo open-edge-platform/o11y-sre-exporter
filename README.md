@@ -127,6 +127,9 @@ make proto
 
 ## Develop
 
+It is recommended to develop the `sre-exporter` application by deploying and testing it as a part of the Edge Orchestrator cluster.
+Refer to [Development and Testing](docs/develop.md) document for more detailed instructions.
+
 The code of this project is maintained and released in CI using the `VERSION` file.
 In addition, the chart is versioned with the same tag as the `VERSION` file.
 
@@ -138,9 +141,6 @@ To bump the version, increment the version in the `VERSION` file and run the fol
 ```sh
 make helm-build
 ```
-
-It is recommended to develop the `sre-exporter` application by deploying and testing it as a part of the Edge Orchestrator cluster.
-Refer to [Development and Testing](docs/develop.md) document for more detailed instructions.
 
 ## Contribute
 
