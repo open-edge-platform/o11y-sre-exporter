@@ -3,9 +3,9 @@ SPDX-FileCopyrightText: (C) 2025 Intel Corporation
 SPDX-License-Identifier: Apache-2.0
 -->
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
 # Edge Orchestrator SRE Exporter
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 [Documentation]: https://docs.openedgeplatform.intel.com/edge-manage-docs/main/developer_guide/observability/arch/index.html
 [Prometheus Remote-Write Protocol]: https://prometheus.io/docs/specs/remote_write_spec/
