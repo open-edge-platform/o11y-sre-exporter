@@ -444,11 +444,12 @@ func TestRemoveTenant(t *testing.T) {
 func TestProcessTenant(t *testing.T) {
 	// Start a test HTTP server
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path == "/reload" {
+		switch r.URL.Path {
+		case "/reload":
 			w.WriteHeader(http.StatusOK)
 			_, err := w.Write([]byte("success"))
 			require.NoError(t, err, "Failed to write response")
-		} else if r.URL.Path == "/confighash" {
+		case "/confighash":
 			w.WriteHeader(http.StatusOK)
 			// return hash of initialConfig. Instruction for update:
 			// 1. run `go test -v -run TestProcessTenant ./...`
@@ -457,7 +458,7 @@ func TestProcessTenant(t *testing.T) {
 			// 3. replace the hash below with the 1st hash from the error message
 			_, err := w.Write([]byte("992ea0311294f8aeef0e0c0720a5d00fac66c6e4dbd615679d00ad9e5a4f2681"))
 			require.NoError(t, err, "Failed to write response")
-		} else {
+		default:
 			w.WriteHeader(http.StatusNotFound)
 		}
 	}))
