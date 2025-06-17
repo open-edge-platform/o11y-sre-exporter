@@ -65,7 +65,7 @@
         },
         {
           "name": "nodeCpuUsedQuery",
-          "query": "sum by(k8s_node_name) (k8s_node_cpu_utilization)",
+          "query": "sum by(k8s_node_name) (k8s_node_cpu_usage)",
           "id": "cpu_used_cores",
           "help": "Used CPU cores per node",
           "labels": [

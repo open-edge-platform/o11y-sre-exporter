@@ -143,7 +143,7 @@ func TestCollector(t *testing.T) {
 						queryResponses: map[string]string{
 							"traefik_service_requests_total":                   "orch_traefik_service_requests_total.json",
 							"sum by(k8s_node_name) (k8s_node_allocatable_cpu)": "orch_cpu_total_cores.json",
-							"sum by(k8s_node_name) (k8s_node_cpu_utilization)": "orch_cpu_used_cores.json",
+							"sum by(k8s_node_name) (k8s_node_cpu_usage)":       "orch_cpu_used_cores.json",
 							"k8s_node_allocatable_memory":                      "orch_memory_total_bytes.json",
 							"k8s_node_memory_available":                        "orch_memory_available_bytes.json",
 						},
@@ -175,7 +175,7 @@ func TestCollector(t *testing.T) {
 						queryResponses: map[string]string{
 							"traefik_service_requests_total":                   "orch_traefik_service_requests_total.json",
 							"sum by(k8s_node_name) (k8s_node_allocatable_cpu)": "orch_cpu_total_cores.json",
-							"sum by(k8s_node_name) (k8s_node_cpu_utilization)": "orch_cpu_used_cores.json",
+							"sum by(k8s_node_name) (k8s_node_cpu_usage)":       "orch_cpu_used_cores.json",
 							"k8s_node_allocatable_memory":                      "orch_memory_total_bytes.json",
 							"k8s_node_memory_available":                        "orch_memory_available_bytes.json",
 						},
@@ -207,7 +207,7 @@ func TestCollector(t *testing.T) {
 						queryResponses: map[string]string{
 							"traefik_service_requests_total":                   "orch_traefik_service_requests_total.json",
 							"sum by(k8s_node_name) (k8s_node_allocatable_cpu)": "orch_cpu_total_cores.json",
-							"sum by(k8s_node_name) (k8s_node_cpu_utilization)": "orch_cpu_used_cores.json",
+							"sum by(k8s_node_name) (k8s_node_cpu_usage)":       "orch_cpu_used_cores.json",
 							"k8s_node_allocatable_memory":                      "orch_memory_total_bytes.json",
 							"k8s_node_memory_available":                        "orch_memory_available_bytes.json",
 						},
@@ -239,7 +239,7 @@ func TestCollector(t *testing.T) {
 						queryResponses: map[string]string{
 							"traefik_service_requests_total":                   "orch_traefik_service_requests_total.json",
 							"sum by(k8s_node_name) (k8s_node_allocatable_cpu)": "orch_cpu_total_cores.json",
-							"sum by(k8s_node_name) (k8s_node_cpu_utilization)": "orch_cpu_used_cores.json",
+							"sum by(k8s_node_name) (k8s_node_cpu_usage)":       "orch_cpu_used_cores.json",
 							"k8s_node_allocatable_memory":                      "orch_memory_total_bytes.json",
 							"k8s_node_memory_available":                        "orch_memory_available_bytes.json",
 						},
@@ -271,7 +271,7 @@ func TestCollector(t *testing.T) {
 						queryResponses: map[string]string{
 							"traefik_service_requests_total":                   "orch_traefik_service_requests_total.json",
 							"sum by(k8s_node_name) (k8s_node_allocatable_cpu)": "orch_cpu_total_cores.json",
-							"sum by(k8s_node_name) (k8s_node_cpu_utilization)": "orch_cpu_used_cores.json",
+							"sum by(k8s_node_name) (k8s_node_cpu_usage)":       "orch_cpu_used_cores.json",
 							"k8s_node_allocatable_memory":                      "orch_memory_total_bytes.json",
 							"k8s_node_memory_available":                        "orch_memory_available_bytes.json",
 						},
@@ -304,7 +304,7 @@ func TestCollector(t *testing.T) {
 						queryResponses: map[string]string{
 							"traefik_service_requests_total":                   "orch_traefik_service_requests_total.json",
 							"sum by(k8s_node_name) (k8s_node_allocatable_cpu)": "orch_cpu_total_cores.json",
-							"sum by(k8s_node_name) (k8s_node_cpu_utilization)": "orch_cpu_used_cores.json",
+							"sum by(k8s_node_name) (k8s_node_cpu_usage)":       "orch_cpu_used_cores.json",
 							"k8s_node_allocatable_memory":                      "orch_memory_total_bytes.json",
 							"k8s_node_memory_available":                        "orch_memory_available_bytes.json",
 						},
@@ -336,7 +336,7 @@ func TestCollector(t *testing.T) {
 						queryResponses: map[string]string{
 							"traefik_service_requests_total":                   "orch_traefik_service_requests_total.json",
 							"sum by(k8s_node_name) (k8s_node_allocatable_cpu)": "orch_cpu_total_cores.json",
-							"sum by(k8s_node_name) (k8s_node_cpu_utilization)": "orch_cpu_used_cores.json",
+							"sum by(k8s_node_name) (k8s_node_cpu_usage)":       "orch_cpu_used_cores.json",
 							"k8s_node_allocatable_memory":                      "orch_memory_total_bytes.json",
 							"k8s_node_memory_available":                        "orch_memory_available_bytes.json",
 						},
