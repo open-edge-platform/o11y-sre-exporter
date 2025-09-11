@@ -9,7 +9,7 @@ require (
 	github.com/prometheus/client_model v0.6.2
 	github.com/prometheus/common v0.65.0
 	github.com/stretchr/testify v1.11.1
-	google.golang.org/grpc v1.75.0
+	google.golang.org/grpc v1.75.1
 	google.golang.org/protobuf v1.36.8
 	k8s.io/api v0.34.1
 	k8s.io/apimachinery v0.34.1
