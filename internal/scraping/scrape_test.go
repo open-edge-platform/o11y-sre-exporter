@@ -12,6 +12,7 @@ import (
 
 	dto "github.com/prometheus/client_model/go"
 	"github.com/prometheus/common/expfmt"
+	"github.com/prometheus/common/model"
 	"github.com/stretchr/testify/require"
 
 	"github.com/open-edge-platform/o11y-sre-exporter/internal/models"
@@ -77,7 +78,7 @@ func TestGetMetrics(t *testing.T) {
 
 func TestParseMetrics(t *testing.T) {
 	t.Run("test parseMetrics function", func(t *testing.T) {
-		var parser expfmt.TextParser
+		parser := expfmt.NewTextParser(model.LegacyValidation)
 		metricFamiliesByNameExpected, err := parser.TextToMetricFamilies(strings.NewReader(inputString))
 		if err != nil {
 			t.Fatal(err)
@@ -106,7 +107,7 @@ func TestParseMetrics(t *testing.T) {
 }
 
 func TestGetValue(t *testing.T) {
-	var parser expfmt.TextParser
+	parser := expfmt.NewTextParser(model.LegacyValidation)
 	metricFamiliesByName, err := parser.TextToMetricFamilies(strings.NewReader(inputString))
 	if err != nil {
 		t.Fatal(err)
