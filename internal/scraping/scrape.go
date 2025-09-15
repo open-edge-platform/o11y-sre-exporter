@@ -13,6 +13,7 @@ import (
 
 	dto "github.com/prometheus/client_model/go"
 	"github.com/prometheus/common/expfmt"
+	"github.com/prometheus/common/model"
 
 	"github.com/open-edge-platform/o11y-sre-exporter/internal/models"
 )
@@ -74,7 +75,7 @@ func getMetrics(endpoint string) (string, error) {
 }
 
 func parseMetrics(text string) (map[string]*dto.MetricFamily, error) {
-	var parser expfmt.TextParser
+	parser := expfmt.NewTextParser(model.LegacyValidation)
 	metricFamiliesByName, err := parser.TextToMetricFamilies(strings.NewReader(text))
 	if err != nil {
 		return nil, err
