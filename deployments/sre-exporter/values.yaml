@@ -142,3 +142,5 @@ imagePullSecrets: { }
 
 # Note: this should only be configured in testing environments
 devMode: false
+
+externalSecretsApiGroup: external-secrets.io/v1beta1
