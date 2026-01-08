@@ -655,7 +655,8 @@ func TestProcessTenant(t *testing.T) {
 				reloadEndpoint:     ts.URL + "/reload",
 				configHashEndpoint: ts.URL + "/confighash",
 				clientset:          clientset,
-				grpcServer:         grpc.NewServer(),
+				// nosemgrep: go.grpc.security.grpc-server-insecure-connection.grpc-server-insecure-connection // test scenario
+				grpcServer: grpc.NewServer(),
 			}
 
 			_, err := server.processTenant(t.Context(), test.tenantRequest, test.action)
