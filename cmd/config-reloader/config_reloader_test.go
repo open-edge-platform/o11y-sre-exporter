@@ -69,7 +69,7 @@ func TestGetConfigMap(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset()
+			clientset := fake.NewClientset()
 			if test.expectedConfigMap != nil {
 				_, err := clientset.CoreV1().ConfigMaps(test.namespace).Create(t.Context(), test.expectedConfigMap, metav1.CreateOptions{})
 				require.NoError(t, err, "Failed to create ConfigMap in fake clientset")
@@ -114,7 +114,7 @@ func TestGetPod(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset()
+			clientset := fake.NewClientset()
 			if test.expectedPod != nil {
 				_, err := clientset.CoreV1().Pods(test.namespace).Create(t.Context(), test.expectedPod, metav1.CreateOptions{})
 				require.NoError(t, err, "Failed to create ConfigMap in fake clientset")
@@ -261,7 +261,7 @@ func TestUpdateConfigMap(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset(
+			clientset := fake.NewClientset(
 				&corev1.ConfigMap{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      "test-configmap",
@@ -313,7 +313,7 @@ func TestUpdatePod(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset(
+			clientset := fake.NewClientset(
 				&corev1.Pod{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      "test-pod",
@@ -636,7 +636,7 @@ func TestProcessTenant(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset()
+			clientset := fake.NewClientset()
 			if test.configMap != nil {
 				_, err := clientset.CoreV1().ConfigMaps(sreNamespace).Create(t.Context(), test.configMap, metav1.CreateOptions{})
 				require.NoError(t, err, "Failed to create ConfigMap in fake clientset")

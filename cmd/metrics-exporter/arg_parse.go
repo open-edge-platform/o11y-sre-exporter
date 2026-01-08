@@ -39,5 +39,5 @@ Metrics-Exporter v%s starting up with the following parameters:
 func parseArgs() {
 	flag.Var(&configFiles, "config", "filename of json file that holds collector and metric data")
 	flag.Var(&vaultURIs, "vaultURI", "URI to contact vault via NOTE this can be set multiple times")
-	flag.Parse()
+	flag.Parse() //nolint:revive // Keep Parse call as file is part of main package
 }
