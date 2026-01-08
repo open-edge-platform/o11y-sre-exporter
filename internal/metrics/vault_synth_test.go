@@ -93,7 +93,7 @@ func TestCollect(t *testing.T) {
 	namespace := VaultMetricNamespace
 	customer := "cs"
 	t.Run("empty vault URI", func(t *testing.T) {
-		clientSet := fake.NewSimpleClientset()
+		clientSet := fake.NewClientset()
 		collector := NewVaultSynthCollector(clientSet, nil, vaultPodsNamespace, DefaultPodPort, customer)
 		expected, err := os.ReadFile(path.Join(pathToTestVaultOutputData, "empty"))
 		require.NoError(t, err)
@@ -102,7 +102,7 @@ func TestCollect(t *testing.T) {
 		require.NoError(t, err)
 	})
 	t.Run("no pods in k8s", func(t *testing.T) {
-		clientSet := fake.NewSimpleClientset()
+		clientSet := fake.NewClientset()
 		vaultPodsName := []string{"vault-1"}
 		collector := NewVaultSynthCollector(clientSet, vaultPodsName, vaultPodsNamespace, DefaultPodPort, customer)
 		expected, err := os.ReadFile(path.Join(pathToTestVaultOutputData, "warnings"))
@@ -124,7 +124,7 @@ func TestCollect(t *testing.T) {
 				PodIP: testURL.Hostname(),
 			},
 		}
-		clientSet := fake.NewSimpleClientset(p)
+		clientSet := fake.NewClientset(p)
 		collector := NewVaultSynthCollector(clientSet, vaultPodsName, vaultPodsNamespace, testURL.Port(), customer)
 		expected, err := os.ReadFile(path.Join(pathToTestVaultOutputData, "warnings"))
 		require.NoError(t, err)
@@ -146,7 +146,7 @@ func TestCollect(t *testing.T) {
 				PodIP: testURL.Hostname(),
 			},
 		}
-		clientSet := fake.NewSimpleClientset(p)
+		clientSet := fake.NewClientset(p)
 		collector := NewVaultSynthCollector(clientSet, vaultPodsName, vaultPodsNamespace, testURL.Port(), customer)
 		expected, err := os.ReadFile(path.Join(pathToTestVaultOutputData, "ok_1_pod"))
 		require.NoError(t, err)
@@ -180,7 +180,7 @@ func TestCollect(t *testing.T) {
 				},
 			},
 		}
-		clientSet := fake.NewSimpleClientset(pods...)
+		clientSet := fake.NewClientset(pods...)
 
 		collector := NewVaultSynthCollector(clientSet, vaultPodsName, vaultPodsNamespace, testURL.Port(), customer)
 		expected, err := os.ReadFile(path.Join(pathToTestVaultOutputData, "ok_2_pods"))
