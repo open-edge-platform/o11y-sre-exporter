@@ -335,9 +335,9 @@ func TestUpdatePod(t *testing.T) {
 				// which cannot be anticipated and breaks comparison check.
 				updatedPodMeta := &corev1.Pod{
 					ObjectMeta: metav1.ObjectMeta{
-						Name:        podAfterUpdate.ObjectMeta.Name,
-						Namespace:   podAfterUpdate.ObjectMeta.Namespace,
-						Annotations: podAfterUpdate.ObjectMeta.Annotations,
+						Name:        podAfterUpdate.Name,
+						Namespace:   podAfterUpdate.Namespace,
+						Annotations: podAfterUpdate.Annotations,
 					},
 				}
 				require.Equal(t, test.updatedPod, updatedPodMeta)

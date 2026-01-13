@@ -84,7 +84,7 @@ func TestParseMetrics(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		var metricFamiliesExpected []*dto.MetricFamily
+		var metricFamiliesExpected []*dto.MetricFamily //nolint:prealloc // Keep current configuration
 		for _, mf := range metricFamiliesByNameExpected {
 			metricFamiliesExpected = append(metricFamiliesExpected, mf)
 		}
@@ -92,7 +92,7 @@ func TestParseMetrics(t *testing.T) {
 		metricFamiliesByNameActual, err := parseMetrics(inputString)
 		require.NoError(t, err)
 
-		var metricFamiliesActual []*dto.MetricFamily
+		var metricFamiliesActual []*dto.MetricFamily //nolint:prealloc // Keep current configuration
 		for _, mf := range metricFamiliesByNameActual {
 			metricFamiliesActual = append(metricFamiliesActual, mf)
 		}

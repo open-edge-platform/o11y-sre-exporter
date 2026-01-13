@@ -97,7 +97,7 @@ func main() {
 // initializePipelineManager initializes the pipeline manager and returns it along with any error encountered.
 func initializePipelineManager(pipelineManager *impl.PipelineManager, configFiles []string, vaultURIs []string,
 	vaultNamespace, customerLabel *string, done chan os.Signal) error {
-	pipelines := make([]*impl.Pipeline, 0)
+	pipelines := make([]*impl.Pipeline, 0) //nolint:prealloc // Keep current configuration
 	configHash := make(map[string]string)
 
 	for i := range configFiles {

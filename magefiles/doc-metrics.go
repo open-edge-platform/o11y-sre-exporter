@@ -110,7 +110,7 @@ func extractMetricDescriptors(configFile string) ([]metricDescriptor, error) {
 		return nil, err
 	}
 
-	var descriptors []metricDescriptor
+	var descriptors []metricDescriptor //nolint:prealloc // Keep current configuration
 	for _, collector := range config.Collectors {
 		for _, metric := range collector.Metrics {
 			metricName := strings.Join([]string{config.Namespace, collector.Name, metric.ID}, "_")
