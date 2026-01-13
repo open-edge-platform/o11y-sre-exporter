@@ -69,7 +69,7 @@ func TestGetConfigMap(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset()
+			clientset := fake.NewClientset()
 			if test.expectedConfigMap != nil {
 				_, err := clientset.CoreV1().ConfigMaps(test.namespace).Create(t.Context(), test.expectedConfigMap, metav1.CreateOptions{})
 				require.NoError(t, err, "Failed to create ConfigMap in fake clientset")
@@ -114,7 +114,7 @@ func TestGetPod(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset()
+			clientset := fake.NewClientset()
 			if test.expectedPod != nil {
 				_, err := clientset.CoreV1().Pods(test.namespace).Create(t.Context(), test.expectedPod, metav1.CreateOptions{})
 				require.NoError(t, err, "Failed to create ConfigMap in fake clientset")
@@ -261,7 +261,7 @@ func TestUpdateConfigMap(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset(
+			clientset := fake.NewClientset(
 				&corev1.ConfigMap{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      "test-configmap",
@@ -313,7 +313,7 @@ func TestUpdatePod(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset(
+			clientset := fake.NewClientset(
 				&corev1.Pod{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      "test-pod",
@@ -330,8 +330,17 @@ func TestUpdatePod(t *testing.T) {
 				podAfterUpdate, err := clientset.CoreV1().Pods(sreNamespace).Get(t.Context(), "test-pod", metav1.GetOptions{})
 				require.NoError(t, err)
 
-				require.NoError(t, err)
-				require.Equal(t, test.updatedPod, podAfterUpdate)
+				// Create updated pod structure to compare against expected, using response from Get above.
+				// This is due to fake.NewClientSet adding FieldManagement data to the Pod.ObjectMeta structure
+				// which cannot be anticipated and breaks comparison check.
+				updatedPodMeta := &corev1.Pod{
+					ObjectMeta: metav1.ObjectMeta{
+						Name:        podAfterUpdate.Name,
+						Namespace:   podAfterUpdate.Namespace,
+						Annotations: podAfterUpdate.Annotations,
+					},
+				}
+				require.Equal(t, test.updatedPod, updatedPodMeta)
 			}
 		})
 	}
@@ -636,7 +645,7 @@ func TestProcessTenant(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			clientset := fake.NewSimpleClientset()
+			clientset := fake.NewClientset()
 			if test.configMap != nil {
 				_, err := clientset.CoreV1().ConfigMaps(sreNamespace).Create(t.Context(), test.configMap, metav1.CreateOptions{})
 				require.NoError(t, err, "Failed to create ConfigMap in fake clientset")
@@ -655,7 +664,8 @@ func TestProcessTenant(t *testing.T) {
 				reloadEndpoint:     ts.URL + "/reload",
 				configHashEndpoint: ts.URL + "/confighash",
 				clientset:          clientset,
-				grpcServer:         grpc.NewServer(),
+				// nosemgrep: go.grpc.security.grpc-server-insecure-connection.grpc-server-insecure-connection // test scenario
+				grpcServer: grpc.NewServer(),
 			}
 
 			_, err := server.processTenant(t.Context(), test.tenantRequest, test.action)
