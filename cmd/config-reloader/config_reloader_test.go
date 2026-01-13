@@ -330,8 +330,17 @@ func TestUpdatePod(t *testing.T) {
 				podAfterUpdate, err := clientset.CoreV1().Pods(sreNamespace).Get(t.Context(), "test-pod", metav1.GetOptions{})
 				require.NoError(t, err)
 
-				require.NoError(t, err)
-				require.Equal(t, test.updatedPod, podAfterUpdate)
+				// Create updated pod structure to compare against expected, using response from Get above.
+				// This is due to fake.NewClientSet adding FieldManagement data to the Pod.ObjectMeta structure
+				// which cannot be anticipated and breaks comparison check.
+				updatedPodMeta := &corev1.Pod{
+					ObjectMeta: metav1.ObjectMeta{
+						Name:        podAfterUpdate.ObjectMeta.Name,
+						Namespace:   podAfterUpdate.ObjectMeta.Namespace,
+						Annotations: podAfterUpdate.ObjectMeta.Annotations,
+					}
+				}
+				require.Equal(t, test.updatedPod, updatedPodMeta)
 			}
 		})
 	}
