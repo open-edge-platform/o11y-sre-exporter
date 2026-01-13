@@ -338,7 +338,7 @@ func TestUpdatePod(t *testing.T) {
 						Name:        podAfterUpdate.ObjectMeta.Name,
 						Namespace:   podAfterUpdate.ObjectMeta.Namespace,
 						Annotations: podAfterUpdate.ObjectMeta.Annotations,
-					}
+					},
 				}
 				require.Equal(t, test.updatedPod, updatedPodMeta)
 			}
