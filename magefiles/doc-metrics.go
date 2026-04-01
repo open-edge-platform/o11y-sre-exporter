@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: (C) 2025 Intel Corporation
+// SPDX-FileCopyrightText: (C) 2026 Intel Corporation
 // SPDX-License-Identifier: Apache-2.0
 //go:build mage
 
@@ -110,7 +110,7 @@ func extractMetricDescriptors(configFile string) ([]metricDescriptor, error) {
 		return nil, err
 	}
 
-	var descriptors []metricDescriptor //nolint:prealloc // Keep current configuration
+	var descriptors []metricDescriptor
 	for _, collector := range config.Collectors {
 		for _, metric := range collector.Metrics {
 			metricName := strings.Join([]string{config.Namespace, collector.Name, metric.ID}, "_")
