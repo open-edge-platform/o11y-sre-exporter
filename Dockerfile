@@ -12,7 +12,7 @@ RUN apk add --upgrade --no-cache make=~4 bash=~5
 COPY . .
 
 # Build binary
-RUN go mod download && make build
+RUN make build
 
 FROM alpine:3.23@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
 
