@@ -43,7 +43,7 @@ DOCKER_FILES_TO_LINT               := $(shell find . -type f -name 'Dockerfile*'
 
 GOCMD         := CGO_ENABLED=0 GOARCH=amd64 GOOS=linux go
 GOCMD_TEST    := CGO_ENABLED=1 GOARCH=amd64 GOOS=linux go
-GOEXTRAFLAGS  :=-trimpath -mod=readonly -gcflags="all=-N -l" -ldflags="all=-s -w -X main.version=$(shell cat ./VERSION)"
+GOEXTRAFLAGS  :=-trimpath -mod=readonly -gcflags="all=-spectre=all -N -l" -asmflags="-spectre=all" -ldflags="all=-s -w -X main.version=$(shell cat ./VERSION)"
 
 .DEFAULT_GOAL := help
 .PHONY: build
