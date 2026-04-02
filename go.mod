@@ -1,10 +1,10 @@
 module github.com/open-edge-platform/o11y-sre-exporter
 
-go 1.25.7
+go 1.26.1
 
 require (
 	github.com/gorilla/mux v1.8.1
-	github.com/magefile/mage v1.17.0
+	github.com/magefile/mage v1.17.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/prometheus/client_model v0.6.2
 	github.com/prometheus/common v0.67.5
