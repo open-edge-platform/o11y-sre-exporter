@@ -1,7 +1,7 @@
-// SPDX-FileCopyrightText: (C) 2025 Intel Corporation
+// SPDX-FileCopyrightText: (C) 2026 Intel Corporation
 // SPDX-License-Identifier: Apache-2.0
 
-package color
+package color //nolint:revive,nolintlint // Package name color is intentional
 
 type Color string
 
